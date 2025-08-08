@@ -1,0 +1,269 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CIDEX Listening Quiz - Level 3</title>
+  <style>
+    body {
+      background-color: #0f172a;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+    h1, h2 {
+      text-align: center;
+      color: #38bdf8;
+    }
+    .audio-section {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .quiz-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #1e293b;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+    }
+    .question {
+      margin-bottom: 20px;
+    }
+    .options label {
+      display: block;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+    button {
+      background-color: #38bdf8;
+      color: #000;
+      border: none;
+      padding: 10px 16px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: #0ea5e9;
+    }
+    .correct {
+      color: limegreen;
+      font-size: 22px;
+      font-weight: bold;
+    }
+    .incorrect {
+      color: red;
+      font-size: 22px;
+      font-weight: bold;
+    }
+    .feedback {
+      margin-top: 10px;
+      font-size: 18px;
+    }
+    .score-section {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>✅ CIDEX Listening Quiz - Level 3 Full</h1>
+
+  <div class="audio-section">
+    <p>🎧 Listen to the audio below before starting the quiz:</p>
+    <audio controls>
+      <source src="ca-audio-prova-n3.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+
+  <div class="quiz-container">
+    <div id="quiz"></div>
+    <div id="score-section" class="score-section hidden">
+      <h2>Your Score:</h2>
+      <p id="score"></p>
+      <button onclick="restartQuiz()">🔁 Restart Quiz</button>
+    </div>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        text: "The speaker is...",
+        options: ["in favour of budget travel.", "not interested in budget travel.", "not in favour of budget travel.", "against budget airlines."],
+        correct: 0,
+        explanation: "He supports low-cost travel for convenience and affordability.",
+        example: "✅ Example: Budget airlines help me see my girlfriend more often."
+      },
+      {
+        text: "The speaker's girlfriend...",
+        options: ["hasn't seen him for three years.", "lives in Edinburgh.", "cannot move to the same city he lives.", "receives a research grant."],
+        correct: 2,
+        explanation: "She is unable to relocate due to commitments.",
+        example: "✅ Example: We live far apart because she can’t leave her job."
+      },
+      {
+        text: "The speaker...",
+        options: ["has decided to stop flying.", "believes airplane flights contribute to the destruction of the planet.", "feels guilty for living far from his girlfriend.", "spends a lot of money on travelling."],
+        correct: 1,
+        explanation: "He expresses concern about carbon emissions from flying.",
+        example: "✅ Example: Flying harms the environment, but I still fly to see her."
+      },
+      {
+        text: "Based on the conversation, we can state that...",
+        options: ["Damien speaks only English.", "Carmen speaks French and English.", "Damien speaks English and Spanish.", "Carmen speaks English and Spanish."],
+        correct: 2,
+        explanation: "Damien is bilingual and learning.",
+        example: "✅ Example: I use English at school and Spanish at home."
+      },
+      {
+        text: "Which sentence is true?",
+        options: ["Carmen is pessimistic about Damien’s job search.", "Damien already found a job.", "Carmen is optimistic about Damien’s work opportunities.", "Damien has no qualifications."],
+        correct: 2,
+        explanation: "Carmen shows encouragement and support for Damien's prospects.",
+        example: "✅ Example: There are lots of openings; you’ll find something soon!"
+      },
+      {
+        text: "Carmen can help because she...",
+        options: ["works at a university.", "knows a member of the university staff.", "is Damien’s professor.", "works in the HR department."],
+        correct: 1,
+        explanation: "Her connection may help Damien with a job.",
+        example: "✅ Example: My cousin works in admin; maybe she can help you."
+      },
+      {
+        text: "What does it mean that selfies are now a 'ubiquitous' part of life?",
+        options: ["They are rarely taken.", "It is present everywhere at the same time.", "They are annoying.", "They are digital."],
+        correct: 1,
+        explanation: "'Ubiquitous' means something very common and widespread.",
+        example: "✅ Example: Selfies are everywhere—in cafes, airports, streets."
+      },
+      {
+        text: "What activity caused more deaths in 2015 than shark attacks?",
+        options: ["Driving on highways.", "Striking a pose and puckering lips with a friend.", "Riding rollercoasters.", "Flying drones."],
+        correct: 1,
+        explanation: "Dangerous posing led to selfie-related deaths.",
+        example: "✅ Example: A fall while taking a duck-face selfie on a cliff."
+      },
+      {
+        text: "What does the podcast say about selfie vs. shark deaths?",
+        options: ["They are equal.", "Shark deaths are twice as high.", "Selfies are two times more deadly than shark attacks.", "There were no shark deaths."],
+        correct: 2,
+        explanation: "Data shows selfie fatalities exceed those by sharks.",
+        example: "✅ Example: 20 people died taking selfies; only 10 by sharks."
+      },
+      {
+        text: "How many people died from selfie-related accidents in Russia in one month?",
+        options: ["One person.", "A large number of people.", "Ten people.", "None."],
+        correct: 1,
+        explanation: "The official mentioned an alarming number of deaths.",
+        example: "✅ Example: It shocked the country—too many in such a short time."
+      },
+      {
+        text: "What does the research company foresee?",
+        options: ["Internet will end.", "IoT will disappear.", "26 billion devices on the Internet of Things in 16 years.", "Robots taking over jobs."],
+        correct: 2,
+        explanation: "Prediction refers to 26 billion IoT devices in future.",
+        example: "✅ Example: Homes, cars, and wearables will all be online."
+      },
+      {
+        text: "What is a main worry for the future?",
+        options: ["Climate change.", "Intrusion of others in one's personal life or affairs.", "Electric bills.", "Less technology."],
+        correct: 1,
+        explanation: "Concern is privacy due to increasing connectivity.",
+        example: "✅ Example: Hackers could access private data through smart devices."
+      },
+      {
+        text: "What does the expression 'seamless experience' refer to?",
+        options: ["Fast food.", "Simple decisions.", "Integrated technology.", "Virtual reality."],
+        correct: 2,
+        explanation: "It refers to smooth, uninterrupted, integrated user experiences.",
+        example: "✅ Example: One app controls lights, alarm, music—all in sync."
+      },
+      {
+        text: "What is necessary to practice spear fishing?",
+        options: ["Wetsuit, weights and flippers.", "Oxygen tank.", "Scuba diving license.", "Fishing net."],
+        correct: 0,
+        explanation: "Michael highlights essential gear: wetsuit, weights, and flippers.",
+        example: "✅ Example: You need the right suit and gear to dive properly."
+      },
+      {
+        text: "How does Michael refer to sharks and dogs?",
+        options: ["He finds sharks scarier.", "Both have frightening behaviours.", "He likes dogs more.", "Dogs are more dangerous."],
+        correct: 1,
+        explanation: "He compares dogs and sharks as equally intimidating sometimes.",
+        example: "✅ Example: Honestly, I’ve seen dogs behave scarier than sharks."
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+
+    function renderQuestion() {
+      const container = document.getElementById('quiz');
+      container.innerHTML = '';
+
+      if (currentQuestion < questions.length) {
+        const q = questions[currentQuestion];
+        const html = `
+          <div class="question">
+            <h2>Question ${currentQuestion + 1}</h2>
+            <p>${q.text}</p>
+            <div class="options">
+              ${q.options.map((opt, i) => `<label><input type="radio" name="option" value="${i}"> ${opt}</label>`).join('')}
+            </div>
+            <button onclick="checkAnswer()">Submit</button>
+            <div class="feedback" id="feedback"></div>
+          </div>
+        `;
+        container.innerHTML = html;
+      } else {
+        showScore();
+      }
+    }
+
+    function checkAnswer() {
+      const selected = document.querySelector('input[name="option"]:checked');
+      const feedback = document.getElementById('feedback');
+      if (!selected) {
+        alert("Please select an answer.");
+        return;
+      }
+      const value = parseInt(selected.value);
+      const q = questions[currentQuestion];
+      if (value === q.correct) {
+        feedback.innerHTML = `<div class="correct">✅ CORRECT!</div><p>${q.explanation}</p><p>${q.example}</p><button onclick="nextQuestion()">Next</button>`;
+        score++;
+      } else {
+        feedback.innerHTML = `<div class="incorrect">❌ INCORRECT!</div><p>${q.explanation}</p><p>${q.example}</p><button onclick="nextQuestion()">Next</button>`;
+      }
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      renderQuestion();
+    }
+
+    function showScore() {
+      document.getElementById('quiz').innerHTML = '';
+      const scoreContainer = document.getElementById('score-section');
+      document.getElementById('score').innerText = `${score} out of ${questions.length} (${Math.round(score / questions.length * 100)}%)`;
+      scoreContainer.classList.remove('hidden');
+    }
+
+    function restartQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      document.getElementById('score-section').classList.add('hidden');
+      renderQuestion();
+    }
+
+    renderQuestion();
+  </script>
+</body>
+</html>
